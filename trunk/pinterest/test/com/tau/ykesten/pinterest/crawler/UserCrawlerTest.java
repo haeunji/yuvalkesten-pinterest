@@ -15,6 +15,10 @@ public class UserCrawlerTest {
 
 	@Test
 	public void testCrawlPages() throws IOException {
+		execute();
+	}
+
+	private static void execute() throws IOException {
 		Collection<String> baseUrls = new LinkedList<String>();
 		baseUrls.add("http://pinterest.com/?");
 		baseUrls.add("http://pinterest.com/popular/?");
@@ -64,13 +68,14 @@ public class UserCrawlerTest {
 			for (String url : urls) {
 				try {
 					System.out.println("@@@URL: " + url);
-					users.addAll(UserIdsFetcher.getUserIds(url));
+					Set<String> userIds = UserIdsFetcher.getUserIds(url);
+					users.addAll(userIds);
 				} catch (Exception e) {
 					System.out.println("Error in url " + url + " Msg: " + e.getMessage());
 				}
 			}
-			File f = new File("C:\\pinterest\\ids\\usersIds" + i + ".txt");
-			BufferedWriter w = new BufferedWriter(new FileWriter(f));
+			File f = new File("./data/ids/usersIds" + i + ".txt");
+			BufferedWriter w = new BufferedWriter(new FileWriter(f,true));
 			i++;
 			for (String user : users) {
 				System.out.println(user);
@@ -78,11 +83,15 @@ public class UserCrawlerTest {
 			}
 			w.close();
 			try {
-				Thread.sleep(1000 * 60 * 10);
+				Thread.sleep(1000 * 10);
 			} catch (InterruptedException e) {
 				break;
 			}
 		}
+	}
+	
+	public static void main(String[] args) throws Exception {
+		execute();
 	}
 
 }

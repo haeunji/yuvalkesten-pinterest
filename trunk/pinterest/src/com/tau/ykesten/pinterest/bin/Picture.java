@@ -4,22 +4,47 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Picture {
-	private final Set<Pin> appearances;
-	private final String url;
+	private Set<Pin> appearances;
+	private String id;
 	
-	public Picture(String url) {
+	public Picture(){
+		
+	}
+	
+	public Picture(String id) {
 		super();
-		this.url = url;
+		this.id = id;
 		this.appearances = new HashSet<Pin>();
+	}
+	
+	public Picture(String id, Set<Pin> appearances){
+		this.id = id;
+		this.appearances = appearances;
 	}
 
 	public void addAppearance(Pin pin){
 		appearances.add(pin);
 	}
 	
+	public Set<Pin> getAppearances() {
+		return appearances;
+	}
+
+	public String getId() {
+		return id;
+	}
+	
+	public void setAppearances(Set<Pin> appearances) {
+		this.appearances = appearances;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	@Override
 	public int hashCode() {
-		return url.hashCode();
+		return id.hashCode();
 	}
 
 	@Override
@@ -31,10 +56,10 @@ public class Picture {
 		if (getClass() != obj.getClass())
 			return false;
 		Picture other = (Picture) obj;
-		if (url == null) {
-			if (other.url != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!url.equals(other.url))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
