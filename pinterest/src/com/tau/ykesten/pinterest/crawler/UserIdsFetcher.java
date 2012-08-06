@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class UserIdsFetcher {
 
-	private static final Pattern userIdPattern = Pattern.compile("\\s*\\<a\\shref=\"/([A-Za-z0-9]+)/\"\\sclass=\"ImgLink\"\\>|\\s*\\<a\\shref=\"/([A-Za-z0-9]+)/\"\\stitle=\"[^\"]+\"\\sclass=\"ImgLink\"\\>");
+	//private static final Pattern userIdPattern = Pattern.compile("\\s*\\<a\\shref=\"/([A-Za-z0-9]+)/\"\\sclass=\"ImgLink\"\\>|\\s*\\<a\\shref=\"/([A-Za-z0-9]+)/\"\\stitle=\"[^\"]+\"\\sclass=\"ImgLink\"\\>");
 
 
 	public static Set<String> getUserIds(String url) {
@@ -22,9 +22,15 @@ public class UserIdsFetcher {
 			return result;
 		}
 		for (String line : responseLineByLine) {
-			Matcher matcher = userIdPattern.matcher(line);
+			/*Matcher matcher = userIdPattern.matcher(line);
 			if (matcher.matches()){
 				result.add(matcher.group(1));
+			}*/
+			if (line.contains("class=\"ImgLink\"")){
+				int start = line.indexOf("href=\"/");
+				int end = line.indexOf("/\" ");
+				String id = line.substring(start+7, end);
+				result.add(id);
 			}
 		}
 		return result;

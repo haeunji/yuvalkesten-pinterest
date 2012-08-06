@@ -8,14 +8,23 @@ import com.tau.ykesten.pinterest.bin.Pin;
 
 public class PinsAggregator {
 
-	private final Map<String, Picture> urlToPicture;
+	private final Map<String, Picture> idToPicture;
 
 	public PinsAggregator() {
-		urlToPicture = new HashMap<String, Picture>();
-	}
+		idToPicture = new HashMap<String, Picture>();
+	}  
 
 	public void process(Pin pin) {
-		// if (urlToPicture.containsKey(pin.))
+		Picture picture = idToPicture.get(pin.getId());
+		if (picture == null){
+			picture = new Picture(pin.getId());
+			idToPicture.put(pin.getId(), picture);
+		}
+		picture.addAppearance(pin);
+	}
+
+	public Map<String, Picture> getIdToPicture() {
+		return idToPicture;
 	}
 
 }
